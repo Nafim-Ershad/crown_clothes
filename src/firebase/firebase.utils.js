@@ -1,4 +1,6 @@
 import firebase from "firebase/app";
+
+// Importing different modules of firebase
 import "firebase/firestore";
 import "firebase/auth";
 
@@ -12,16 +14,59 @@ var firebaseConfig = {
     measurementId: "G-7GKP7YKJ79"
 };
 
-firebase.initializeApp(firebaseConfig);
+
+
+firebase.initializeApp(firebaseConfig); // Initialized the firebase
+
+// Firestore Database function
+// **********************************************
+const firestore = firebase.firestore();
+
+export const createUserProfileDocument = async(userAuth, additionalData) => {
+    if (!userAuth) return;
+
+    const userRef = firestore.doc(`users/${userAuth.uid}`);
+
+    const snapShot = await userRef.get(); // gets the information from firestore asyncronously
+
+    // console.log("SnapShot:", snapShot);
+
+    if (!snapShot.exists) {
+        const { displayName, email } = userAuth;
+        const createdAt = new Date(); // new keyword is used for creating an object/class variable
+
+        try {
+            await userRef.set({
+                    displayName,
+                    email,
+                    createdAt,
+                    ...additionalData
+                }) // Creates new object/data in database of firestore
+        } catch (error) {
+            console.log("error Creating User: ", error.message);
+        }
+    }
+
+    return userRef;
+}
+
+// **********************************************
+
+
+// Firebase Authentication
+// **********************************************
 
 export const auth = firebase.auth(); // Authentication
-export const firestore = firebase.firestore(); // Database
 
-const provider = new firebase.auth.GoogleAuthProvider(); // Provides a google authentication class from auth module from firebase
+const provider = new firebase.auth.GoogleAuthProvider(); // Provides a google authentication class object from auth module from firebase
 // Could also use auth.GoogleAuthProvider()
 
 provider.setCustomParameters({ prompt: "select_account" }); // Propmts for google account verification
+// prompt : select_account => prompts for account selection
+// prompt: consent => Asks for consent of account usage
 
 export const SignInWithGoogle = () => auth.signInWithPopup(provider);
 
 export default firebase;
+
+// **********************************************

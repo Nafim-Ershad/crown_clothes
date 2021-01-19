@@ -6,7 +6,7 @@ import { Switch, Route } from "react-router-dom";
 import Header from "./components/header/header.component";
 
 // Firebase
-import { auth } from "./firebase/firebase.utils";
+import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 
 // Pages
 import HomePage from "./pages/homepage/homePage.component";
@@ -25,16 +25,33 @@ class App extends React.Component {
     }
   }
 
-  onAuthUnsubcribe = null;
+  unsubcribeFromAuth = null;
 
   componentDidMount(){
-    this.onAuthUnsubcribe = auth.onAuthStateChanged(user => {
-      this.setState({ currUser: user });
+    this.unsubcribeFromAuth = auth.onAuthStateChanged( async userAuth => {
+      if (userAuth){
+        const userRef = await createUserProfileDocument(userAuth);
+
+        // Everytime the page loads, sends a snapshot of the database (information regarding the collection or documents)
+        userRef.onSnapshot( snapShot => {
+          this.setState({
+            currUser: {
+              id : snapShot.id,
+              ...snapShot.data()
+            }
+          });
+        });
+      }
+
+      else{
+        this.setState({ currUser: userAuth })
+      }
+      // console.log("user", user);
     })
   }
 
   componentWillUnmount(){
-    this.onAuthUnsubcribe();
+    this.unsubcribeFromAuth();
   }
 
   render(){
