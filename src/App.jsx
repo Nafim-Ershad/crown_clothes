@@ -18,6 +18,9 @@ import './App.scss';
 
 
 class App extends React.Component {
+  
+  unsubcribeFromAuth = null;
+
   constructor(){
     super();
     this.state={
@@ -25,7 +28,7 @@ class App extends React.Component {
     }
   }
 
-  unsubcribeFromAuth = null;
+  
 
   componentDidMount(){
     this.unsubcribeFromAuth = auth.onAuthStateChanged( async userAuth => {

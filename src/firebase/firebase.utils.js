@@ -52,8 +52,11 @@ export const createUserProfileDocument = async(userAuth, additionalData) => {
 
 // **********************************************
 
+// Custom Email Auth
 
-// Firebase Authentication
+
+
+// Firebase Google Authentication
 // **********************************************
 
 export const auth = firebase.auth(); // Authentication
