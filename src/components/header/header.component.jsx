@@ -11,7 +11,7 @@ import { ReactComponent as Logo } from "../../assets/crwn.svg"
 // Styles
 import "./header.styles.scss";
 
-const Header = ({ currUser }) =>(
+const Header = (props) =>(
     <div className="header">
         <Link className="logo_container" to="/">
             <Logo className="logo"/>
@@ -20,7 +20,7 @@ const Header = ({ currUser }) =>(
             <Link className="option" to="/shop">SHOP</Link>
             <Link className="option" to="/contact">CONTACT</Link>
             {
-                currUser ?
+                props.currentUser ?
                 <div className="option" onClick={ () => auth.signOut() }>SIGN OUT</div>
                 :
                 <Link className="option" to="/sign_in">SIGN IN</Link>

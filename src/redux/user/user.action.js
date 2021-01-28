@@ -5,3 +5,5 @@ export const setCurrentUser = (user) => ({ // Takes in one parameter, might be t
     type: 'SET_CURRENT_USER',
     payload: user
 })
+
+// Can be an Object instead of function
