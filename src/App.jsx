@@ -1,6 +1,6 @@
 // React
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import {connect} from "react-redux";
 
 // Components
@@ -59,12 +59,20 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' component={ HomePage }/>
           <Route exact path='/shop' component={ ShopPage }/>
-          <Route exact path='/sign_in' component={ SignInAndUp }/>
+          <Route exact path='/sign_in' render={() => this.props.currentUser ? 
+          (<Redirect to='/'/>) 
+            : 
+          (<SignInAndUp/>)
+          }/>
         </Switch>
       </div>
     );
   }
 }
+
+const mapStateToProps = ({user}) =>({
+  currentUser: user.currentUser
+})
 
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))
@@ -72,7 +80,7 @@ const mapDispatchToProps = dispatch => ({
   // root reducer
 })
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 // Connect returns another higher order function,
 // that uses the Header() and gives it extra properties
 

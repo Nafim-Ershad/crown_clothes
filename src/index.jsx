@@ -8,6 +8,8 @@ import store from "./redux/store";
 
 import App from './App';
 
+console.log("Store:", store.getState());
+
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
