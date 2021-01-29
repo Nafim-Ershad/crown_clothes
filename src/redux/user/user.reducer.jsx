@@ -16,3 +16,5 @@ export const userReducer = (currentState = INITIAL_STATE, action)=>{
             return currentState;
     }
 }
+
+// Reducer returns an object through a function

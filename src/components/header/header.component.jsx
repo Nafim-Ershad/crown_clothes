@@ -8,6 +8,10 @@ import { auth } from "../../firebase/firebase.utils";
 // Assets
 import { ReactComponent as Logo } from "../../assets/crwn.svg"
 
+// Cart
+import CartDropdown from "../cart-dropdown/cart-dropdown.compoent";
+import CartIcon from "../cart-icon/cart-icon.component";
+
 // Styles
 import "./header.styles.scss";
 
@@ -25,14 +29,18 @@ const Header = (props) =>(
                 :
                 <Link className="option" to="/sign_in">SIGN IN</Link>
             }
-        </div>
+            <CartIcon/>
+        </div> 
+        {
+            props.toggleCart? null: <CartDropdown/>
+        }
     </div>
 )
 
 const mapStateToProps = (state) =>({
     // Name can be anything but mapStateToProps is convention
     // This function returns the state from store as props for the returned higher order function
-    currentUser: state.user.currentUser
+    currentUser: state.user.currentUser,
     // state is passed from the store which gets objects from rootReducer, where we access the user key,
     // then access the currentuser key from the user object
     // rootReducer{
@@ -40,6 +48,7 @@ const mapStateToProps = (state) =>({
         //     {currentuser}
         // }
     //} 
+    toggleCart: state.cart.hidden
 })
 
 export default connect(mapStateToProps)(Header);   

@@ -70,7 +70,7 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = ({user}) =>({
+const mapStateToProps = ({ user }) =>({
   currentUser: user.currentUser
 })
 
@@ -78,6 +78,7 @@ const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))
   // dispatch() is the identifier for redux to identify an action, that will alter the data oin store through
   // root reducer
+  // dispatch(action[object])
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
