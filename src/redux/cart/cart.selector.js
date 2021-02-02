@@ -1,5 +1,4 @@
 // selector made the code memoized
-
 import { createSelector } from "reselect";
 // install - npm install reselect
 
@@ -12,6 +11,11 @@ export const selectCartItems = createSelector(
     cart => cart.cartItems
 )
 
+export const selectCartHidden = createSelector(
+    [selectCart],
+    cart => cart.hidden
+)
+
 // Can be made to do othe types of  functions too
 
 // Output Selector
@@ -19,6 +23,14 @@ export const selectCartQuantity = createSelector(
     [selectCartItems],
     items => (
         items.reduce((accumalatedItems, cartItem) => accumalatedItems + cartItem.quantity, 0 // 0 is the default value for accumalatedItems
+        )
+    )
+)
+
+export const selectCartTotal = createSelector(
+    [selectCartItems],
+    cartItems => (
+        cartItems.reduce((accumalatedItems, cartItem) => accumalatedItems + cartItem.quantity * cartItem.price, 0 // 0 is the default value for accumalatedItems
         )
     )
 )

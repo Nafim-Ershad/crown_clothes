@@ -13,9 +13,13 @@ import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import HomePage from "./pages/homepage/homePage.component";
 import ShopPage from "./pages/shop/shop.component";
 import SignInAndUp from "./pages/sign_in_and_up/sign_in_and_up.component";
+import CheckoutPage from "./pages/checkout/checkout.page";
 
 // Redux Actions
 import { setCurrentUser } from "./redux/user/user.action";
+
+// Selectors
+import { selectCurrentUser } from "./redux/user/user.selector"; // User Selector
 
 // Styles
 import './App.scss';
@@ -64,14 +68,15 @@ class App extends React.Component {
             : 
           (<SignInAndUp/>)
           }/>
+          <Route exact path='/checkout' component={ CheckoutPage }/>
         </Switch>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ user }) =>({
-  currentUser: user.currentUser
+const mapStateToProps = (state) =>({
+  currentUser: selectCurrentUser(state)
 })
 
 const mapDispatchToProps = dispatch => ({
