@@ -1,6 +1,7 @@
 .collection_preview {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     margin-bottom: 30px;
     .title {
         font-size: 28px;

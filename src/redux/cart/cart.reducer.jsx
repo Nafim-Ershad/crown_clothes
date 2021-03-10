@@ -31,6 +31,7 @@ export const cartReducer = (state = INIT_STATE, action) => {
                 cartItems: state.cartItems.filter(cartItem => cartItem.id !== action.payload.id)
             }
         default: 
-            return state;
+            return state; // Always return the default state, dont use {...state}
+            // Bad for redux-persist
     }
 }

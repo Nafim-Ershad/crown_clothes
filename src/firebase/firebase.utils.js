@@ -27,40 +27,36 @@ export const createUserProfileDocument = async(userAuth, additionalData) => {
 
     const userRef = firestore.doc(`users/${userAuth.uid}`);
 
-    const snapShot = await userRef.get(); // gets the information from firestore asyncronously
+    const snapShot = await userRef.get().catch(error => console.warn("ERROR:", error)); // gets the information from firestore asyncronously
 
     // console.log("SnapShot:", snapShot);
+    if (snapShot) {
+        if (!snapShot.exists) {
+            const { displayName, email } = userAuth;
+            const createdAt = new Date(); // new keyword is used for creating an object/class variable
 
-    if (!snapShot.exists) {
-        const { displayName, email } = userAuth;
-        const createdAt = new Date(); // new keyword is used for creating an object/class variable
-
-        try {
-            await userRef.set({
-                    displayName,
-                    email,
-                    createdAt,
-                    ...additionalData
-                }) // Creates new object/data in database of firestore
-        } catch (error) {
-            console.log("error Creating User: ", error.message);
+            try {
+                await userRef.set({
+                        displayName,
+                        email,
+                        createdAt,
+                        ...additionalData
+                    }) // Creates new object/data in database of firestore
+            } catch (error) {
+                console.log("Error Creating User: ", error.message);
+            }
         }
+        return userRef;
     }
-
-    return userRef;
 }
 
 // **********************************************
 
-// Custom Email Auth
-
-
-
-// Firebase Google Authentication
-// **********************************************
 
 export const auth = firebase.auth(); // Authentication
 
+// Firebase Google Authentication
+// **********************************************
 const provider = new firebase.auth.GoogleAuthProvider(); // Provides a google authentication class object from auth module from firebase
 // Could also use auth.GoogleAuthProvider()
 

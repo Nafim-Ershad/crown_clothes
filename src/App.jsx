@@ -37,16 +37,18 @@ class App extends React.Component {
         const userRef = await createUserProfileDocument(userAuth);
 
         // Everytime the page loads, sends a snapshot of the database (information regarding the collection or documents)
-        userRef.onSnapshot( snapShot => {
-            setCurrentUser({
-              id : snapShot.id,
-              ...snapShot.data()
-            })
-        });
+        if(userRef){
+          userRef.onSnapshot( snapShot => {
+              setCurrentUser({
+                id : snapShot.id,
+                ...snapShot.data()
+              })
+          });
+        }
       }
 
       else{
-        setCurrentUser( userAuth )
+        setCurrentUser( userAuth ) // Empty 
       }
       // console.log("user", user);
     })
@@ -62,7 +64,7 @@ class App extends React.Component {
         <Header/>
         <Switch>
           <Route exact path='/' component={ HomePage }/>
-          <Route exact path='/shop' component={ ShopPage }/>
+          <Route path='/shop' component={ ShopPage }/> {/*No exact because, /shop will have other parameters, like /shop/hats */}
           <Route exact path='/sign_in' render={() => this.props.currentUser ? 
           (<Redirect to='/'/>) 
             : 

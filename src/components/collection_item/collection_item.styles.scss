@@ -1,6 +1,6 @@
 .collection_item {
     position: relative;
-    width: 22%;
+    width: 22vw;
     display: flex;
     flex-direction: column;
     height: 350px;
@@ -15,14 +15,14 @@
         }
     }
     .image {
-        width: 100%;
+        width: 95%;
         height: 95%;
         background-size: cover;
         background-position: center;
         margin-bottom: 5px;
     }
     .collection_footer {
-        width: 100%;
+        width: 95%;
         height: 5%;
         display: flex;
         justify-content: space-between;

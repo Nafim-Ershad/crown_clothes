@@ -21,8 +21,8 @@ export const selectCartHidden = createSelector(
 // Output Selector
 export const selectCartQuantity = createSelector(
     [selectCartItems],
-    items => (
-        items.reduce((accumalatedItems, cartItem) => accumalatedItems + cartItem.quantity, 0 // 0 is the default value for accumalatedItems
+    cartItems => (
+        cartItems.reduce((accumalatedItems, cartItem) => accumalatedItems + cartItem.quantity, 0 // 0 is the default value for accumalatedItems
         )
     )
 )
