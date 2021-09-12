@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 // Firebase
@@ -17,28 +16,29 @@ import CartDropdown from "../cart-dropdown/cart-dropdown.compoent";
 import CartIcon from "../cart-icon/cart-icon.component";
 
 // Styles
+import { LogoContainer, OptionsContainer, HeaderContainer, OptionLink, OptionDiv } from "./header.styles";
 import "./header.styles.scss";
 
 const Header = (props) =>(
-    <div className="header">
-        <Link className="logo_container" to="/">
+    <HeaderContainer>
+        <LogoContainer to="/">
             <Logo className="logo"/>
-        </Link>
-        <div className="options">
-            <Link className="option" to="/shop">SHOP</Link>
-            <Link className="option" to="/contact">CONTACT</Link>
+        </LogoContainer>
+        <OptionsContainer>
+            <OptionLink to="/shop">SHOP</OptionLink>
+            <OptionLink to="/contact">CONTACT</OptionLink>
             {
                 props.currentUser ?
-                <div className="option" onClick={ () => auth.signOut() }>SIGN OUT</div>
+                <OptionDiv onClick={ () => auth.signOut() }>SIGN OUT</OptionDiv>
                 :
-                <Link className="option" to="/sign_in">SIGN IN</Link>
+                <OptionLink to="/sign_in">SIGN IN</OptionLink>
             }
             <CartIcon/>
-        </div> 
+        </OptionsContainer> 
         {
             props.toggleCart? null: <CartDropdown/>
         }
-    </div>
+    </HeaderContainer>
 )
 
 const mapStateToProps = (state) =>({
